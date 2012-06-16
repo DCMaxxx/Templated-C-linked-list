@@ -7,3 +7,4 @@
 
 __implement_list__(STRING, char *)
 __implement_list__(INTEGER, size_t)
+__implement_list__(STAT, struct stat)

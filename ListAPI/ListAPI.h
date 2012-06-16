@@ -2,6 +2,10 @@
 #define __ListAPI
 #include "__ListAPI.h"
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 /*
 ** Declarations of lists
 ** See readme.txt for more details
@@ -81,3 +85,4 @@
 
 __define_list__(STRING, char *)
 __define_list__(INTEGER, size_t)
+__define_list__(STAT, struct stat)

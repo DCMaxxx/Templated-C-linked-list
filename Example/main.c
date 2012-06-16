@@ -77,5 +77,7 @@ int main() {
   List(INTEGER) * intList = ListConstruct(INTEGER);
   ListDestruct(INTEGER)(intList);
 
+  List(STAT) * fileList = ListConstruct(STAT);
+  ListDestruct(STAT)(fileList);
   return 0;
 }

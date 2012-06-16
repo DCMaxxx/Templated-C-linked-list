@@ -223,10 +223,9 @@ static void for_each_##name(List(name) *list, void (*func)(type elem)) { \
 List(name) * construct_##name() { \
   List(name) *list; \
   list = malloc(sizeof(List(name))); \
-  list->__begin__ = malloc(sizeof(ListIterator(name))); \
+  list->__begin__ = calloc(1, sizeof(ListIterator(name))); \
   list->__begin__->next = list->__begin__; \
   list->__begin__->prev = list->__begin__; \
-  list->__begin__->elem = (type)0; \
   list->__begin__->isEnd = True; \
   list->begin = &begin_##name; \
   list->end = &end_##name; \
@@ -270,7 +269,7 @@ ListIterator(name) * operator_it_##name(ListIterator(name) * it, int value) { \
 } \
 \
 type value_it_##name(ListIterator(name) *it) { \
-  return it ? it->elem : (type) 0; \
+  return it->elem; \
 } \
 
 
