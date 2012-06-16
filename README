@@ -1,0 +1,78 @@
+Implementation of templated linked list in C.
+Of course, templates is only preprocessed code but works quite well.
+The classic < > are replaced by( )
+
+
+There are three important files in this package :
+  __ListAPI.h
+    Should never be modified, except if you know what you do...
+  ListAPI.c
+    When you want to use a new type of list, you must add this line in this file :
+      __implement_list__(name, type)
+    The first one is the definition of the list, the other one will create static functions used for this kind of list
+  ListAPI.h
+    When you want to use a new type of list, you must add this line in this file :
+      __define_list__(name, type)
+    And include this file when you want to use your lists
+
+
+You can use those functions from a list
+The first parameter is the list you want to deal with :
+
+  // Return iterator to the begin of the list
+  ListIterator(name)  *begin(List(name) *);
+  // Return iterator to the end of the list
+  ListIterator(name)  *end(List(name) *);
+  // Find element that matchs the predicate (Boolean(*)(const type , const type )) with value (type)
+  type                find(List(name) *, Boolean(*)(const type , const type ), type);
+
+  // Return true if list is empty, false else
+  Boolean             empty(List(name) *);
+  // Return the size of the list
+  size_t              size(List(name) *);
+
+  // Return the first element of the list
+  type                front(List(name) *);
+  // Return the last element of the list
+  type                back(List(name) *);
+
+  // Add value (type) to the beginning of the list
+  void                push_front(List(name) *, type );
+  // Remove the first value of the list
+  void                pop_front(List(name) *);
+  // Add value (type) to the end to the list
+  void                push_back(List(name) *, type );
+  // Remove the last value of the list
+  void                pop_back(List(name) *);
+
+  // Assign (size_t) elements of value (type).
+  void                assign(List(name) *, size_t, type );
+  // Insert an element BEFORE (ListIterator(name) *), with value (type)
+  void                insert(List(name) *, ListIterator(name) *, type );
+
+  // Remove (ListIterator(name) *) from list
+          void                erase(List(name) *, ListIterator(name) *);
+  // Remove all elements from the list
+  void                clear(List(name) *);
+
+  // Apply ( void(*)(type) ) to each element of the list
+  void                for_each(List(name) *, void(*)(type ));
+
+To get an instance of the list :
+  List(name) list = ListConstruct(name);
+
+
+
+Quick example :
+  ListAPI.c:
+    __implement_list__(STRING, char *)
+  ListAPI.h
+    __define_list__(STRING, char *)
+  main.c
+    List(STRING) *strList = ListConstruct(STRING);
+    strList->push_back(strList, "First Element");
+    ListIterator(STRING) *it = strList->begin(strList);
+    ...
+
+Read the sample code for more information.
+Or @DCMaxxx on twitter
