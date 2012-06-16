@@ -1,7 +1,7 @@
 NAME=	templatedList
 
 SRC=	ListAPI/ListAPI.c \
-	Examples/main.c
+	Example/main.c
 OBJ=	$(SRC:.c=.o)
 
 INC= -IListAPI -IExamples
@@ -22,4 +22,4 @@ fclean: clean
 re: fclean all
 
 .c.o:
-	$(CC) -c $< -o $@ $(INC)
+	$(CC) -c $< -o $@ $(INC) $(CFLAGS)
