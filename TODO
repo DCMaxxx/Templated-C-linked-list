@@ -1,0 +1,8 @@
+Add a few functions :
+  remove      // Remove all value corresponding to a predicate
+  unique      // Remove duplicate values corresponding to a predicate
+  append      // Addpend a list to another
+  sort        // Sort the list using a predicate
+  reverse     // Reverse the list
+  count       // Count elements corresponding to a predicate
+  valid       // Returns true is the whole list corresponds to a predicate
