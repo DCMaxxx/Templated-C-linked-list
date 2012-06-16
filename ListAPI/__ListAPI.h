@@ -6,7 +6,7 @@
 */
 
 #ifndef __ListAPI
-#error "You should never include this file, use list.h instead"
+#error "You should never include this file, use ListAPI.h instead"
 #endif
 
 #include <stdlib.h>

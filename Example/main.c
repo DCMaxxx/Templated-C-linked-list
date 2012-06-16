@@ -75,6 +75,7 @@ int main() {
 
   // And you can, of course, have different types !!
   List(INTEGER) * intList = ListConstruct(INTEGER);
+  ListDestruct(INTEGER)(intList);
 
   return 0;
 }
