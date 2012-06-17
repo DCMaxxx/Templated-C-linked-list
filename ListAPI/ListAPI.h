@@ -23,10 +23,10 @@
 **    ListIterator(name) * end(List(name) *);
 **
 **  Find the first element that matchs the predicate "predicate" with value "value"
-**    ListIterator(name) * find(List(name) *, Boolean(*)(const type , const type ) predicate, type value);
+**    ListIterator(name) * find(List(name) *, bool(*)(const type , const type ) predicate, type value);
 **
 **  Return True if list is empty, False else
-**    Boolean empty(List(name) *);
+**    bool empty(List(name) *);
 **
 **  Return the size of the list
 **    size_t size(List(name) *);
@@ -71,9 +71,15 @@
 **
 **
 **
-**  To get the value of an iterator
+**  To get or set the value of an iterator
 **    ListIterator(name) * it = list->begin(list);
-**    type value = IteratorValue(name)(value);
+**    type value = IteratorValue(name)(it);
+**    ++value;
+**    IteratorValue(name)(it) = value;
+**
+**  To set the value of an iterator
+**    type value = ...;
+**    IteratorSetter(name)(it, value)
 **
 **  To increment/decrement an iterator
 **    ListIterator(name) * second = IteratorOperator(name)(it, 1);

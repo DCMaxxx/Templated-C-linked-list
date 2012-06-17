@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 void dump(char *str) { printf("%s\n", str); }
-Boolean cmp(char const * first, char const *sec) { return !strcmp(first, sec); }
+bool cmp(char const * first, char const *sec) { return !strcmp(first, sec); }
 
 #include <assert.h>
 #define BEGIN "BEGIN"
@@ -35,7 +35,7 @@ int main() {
   assert(!strcmp(back, END));
 
   // Checking if empty is valid, and if size is really 12
-  assert(lst->empty(lst) == False);
+  assert(lst->empty(lst) == false);
   assert(lst->size(lst) == 12);
   
   // Removing first and last elements
@@ -48,7 +48,7 @@ int main() {
   // Clearing the whole list
   lst->clear(lst);
   assert(lst->size(lst) == 0);
-  assert(lst->empty(lst) == True);
+  assert(lst->empty(lst) == true);
 
   // Adding a few elements
   lst->push_back(lst, BEGIN);
@@ -63,6 +63,10 @@ int main() {
   lst->insert(lst, middle, BEGIN);
   lst->pop_front(lst);
   assert(lst->size(lst) == 3);
+
+  // Modifying values using IteratorValue, IteratorOperator
+  IteratorValue(STRING)(lst->begin(lst)) = END;
+  IteratorValue(STRING)(IteratorOperator(STRING)(lst->end(lst), -1)) = BEGIN;
 
   // Dumping the list with for_each
   lst->for_each(lst, &dump);

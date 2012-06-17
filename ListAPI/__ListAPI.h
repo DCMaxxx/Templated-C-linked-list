@@ -10,8 +10,7 @@
 #endif
 
 #include <stdlib.h>
-
-typedef enum e_bool { False, True } Boolean;
+#include <stdbool.h>
 
 #define List(name) t_list_##name
 #define ListIterator(name) t_list_ListIterator_##name
@@ -20,7 +19,9 @@ typedef enum e_bool { False, True } Boolean;
 #define ListDestruct(name) destruct_##name
 
 #define IteratorOperator(name) operator_it_##name
-#define IteratorValue(name) value_it_##name
+#define IteratorValue(name) __iterator_value__
+
+#define __iterator_value__(it) it->elem
 
 #define __define_list__(name, type) \
 typedef struct s_list_ListIterator_##name ListIterator(name); \
@@ -28,7 +29,7 @@ struct s_list_ListIterator_##name { \
   type elem; \
   ListIterator(name) *prev; \
   ListIterator(name) *next; \
-  Boolean isEnd; \
+  bool isEnd; \
 }; \
 \
 \
@@ -38,9 +39,9 @@ struct s_list_##name { \
 \
   ListIterator(name) *(*begin)(List(name) *); \
   ListIterator(name) *(*end)(List(name) *); \
-  ListIterator(name) *(*find)(List(name) *, Boolean (*)(const type, const type), type); \
+  ListIterator(name) *(*find)(List(name) *, bool (*)(const type, const type), type); \
 \
-  Boolean (*empty)(List(name) *); \
+  bool (*empty)(List(name) *); \
   size_t (*size)(List(name) *); \
 \
   type (*front)(List(name) *); \
@@ -63,7 +64,8 @@ struct s_list_##name { \
 List(name) * construct_##name(); \
 void destruct_##name(List(name) *); \
 ListIterator(name) * operator_it_##name(ListIterator(name) *, int); \
-type value_it_##name(ListIterator(name) *);
+type value_it_##name(ListIterator(name) *); \
+void setter_it_##name(ListIterator(name) *, type);
 
 // Implementation of templated list
 #define __implement_list__(name, type) \
@@ -75,7 +77,7 @@ static ListIterator(name) *end_##name(List(name) *list) { \
   return list->__begin__->prev; \
 } \
 \
-static ListIterator(name) * find_##name(List(name) *list, Boolean (*predicate)(const type, const type), type value) { \
+static ListIterator(name) * find_##name(List(name) *list, bool (*predicate)(const type, const type), type value) { \
   ListIterator(name) *it; \
   for (it = list->begin(list); \
        it != list->end(list) && !predicate(IteratorValue(name)(it), value); \
@@ -85,7 +87,7 @@ static ListIterator(name) * find_##name(List(name) *list, Boolean (*predicate)(c
 \
 \
 \
-static Boolean empty_##name(List(name) *list) { \
+static bool empty_##name(List(name) *list) { \
   return list->begin(list) == list->end(list); \
 } \
 \
@@ -120,7 +122,7 @@ static void push_front_##name(List(name) *list, type elem) { \
   new_element->prev = list->end(list); \
   new_element->next = list->begin(list); \
   new_element->prev->next = new_element; \
-  new_element->isEnd = False; \
+  new_element->isEnd = false; \
   list->__begin__ = new_element; \
 } \
 \
@@ -141,7 +143,7 @@ static void push_back_##name(List(name) *list, type elem) { \
   new_element->prev = list->end(list)->prev; \
   new_element->next = list->end(list); \
   new_element->prev->next = new_element; \
-  new_element->isEnd = False; \
+  new_element->isEnd = false; \
   if (list->empty(list)) \
     list->__begin__ = new_element; \
   list->end(list)->prev = new_element; \
@@ -182,7 +184,7 @@ static void insert_##name(List(name) *list, ListIterator(name) *pos, type elemen
   new_element->next = pos; \
   pos->prev = new_element; \
   new_element->prev->next = new_element; \
-  new_element->isEnd = False; \
+  new_element->isEnd = false; \
   } \
 } \
 \
@@ -226,7 +228,7 @@ List(name) * construct_##name() { \
   list->__begin__ = calloc(1, sizeof(ListIterator(name))); \
   list->__begin__->next = list->__begin__; \
   list->__begin__->prev = list->__begin__; \
-  list->__begin__->isEnd = True; \
+  list->__begin__->isEnd = true; \
   list->begin = &begin_##name; \
   list->end = &end_##name; \
   list->find = &find_##name; \
@@ -271,5 +273,8 @@ ListIterator(name) * operator_it_##name(ListIterator(name) * it, int value) { \
 type value_it_##name(ListIterator(name) *it) { \
   return it->elem; \
 } \
-
+\
+void setter_it_##name(ListIterator(name) *it, type value) { \
+  it->elem = value; \
+} \
 
