@@ -18,14 +18,14 @@ To get more informations about how to use it, read `ListAPI.h` comments.
 
 Warning
 -------
-__ListAPI.h : DO NOT TOUCH THIS, UNLESS YOU KNOW WHAT YOU DO
-I created this just for fun, maybe it doesn't work as well as I think !
+- `__ListAPI.h` : DO NOT TOUCH THIS, UNLESS YOU KNOW WHAT YOU DO
+- I created this just for fun, maybe it doesn't work as well as I think !
 
 Example
 -------
 
-ListAPI.c : `__implement_list__(STRING, char *)`
-ListAPI.h : `__define_list__(STRING, char *)`
+ListAPI.c : `__implement_list__(STRING, char *)`  
+ListAPI.h : `__define_list__(STRING, char *)`  
 main.c :
 ```c
     List(STRING) *strList = ListConstruct(STRING);
